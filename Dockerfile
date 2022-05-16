@@ -1,4 +1,4 @@
-FROM node:14-slim
+FROM node:16-slim
 ENV NODE_ENV=prodcution
 ENV REDIS_URL=redis://172.17.0.1:6379
 EXPOSE 5050
