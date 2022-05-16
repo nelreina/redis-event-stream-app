@@ -1,0 +1,22 @@
+{
+  "name": "@nelreina/redis-event-stream-app",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon --watch src src/index",
+    "start": "node src/index"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "@nelreina/redis-stream-consumer": "^2.0.5",
+    "dotenv": "^16.0.0",
+    "lodash": "^4.17.21",
+    "pino": "^7.11.0",
+    "pino-pretty": "^7.6.1",
+    "redis": "^4.0.6"
+  }
+}
