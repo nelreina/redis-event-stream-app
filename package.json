@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon --watch src src/index",
+    "build": ". docker-build.sh",
     "start": "node src/index"
   },
   "license": "MIT",
