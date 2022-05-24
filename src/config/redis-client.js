@@ -13,7 +13,6 @@ if (REDIS_HOST) {
   }
   url += `${REDIS_HOST}:${REDIS_PORT}`;
 }
-console.log("LOG:  ~ file: redis-client.js ~ line 15 ~ url", url);
 
 export const client = createClient({ url, name: SERVICE });
 await client.connect();
