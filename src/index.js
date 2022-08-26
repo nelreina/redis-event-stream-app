@@ -21,6 +21,7 @@ const shutdown = async () => {
 };
 
 try {
+  if (!client.isOpen) await client.connect();
   if (client.isOpen) {
     logger.info("Successfully connected to redis");
 
