@@ -1,6 +1,8 @@
 FROM node:16-slim
 ENV NODE_ENV=prodcution
 ENV REDIS_URL=redis://172.17.0.1:6379
+RUN apt-get install tzdata
+ENV TZ America/Curacao
 EXPOSE 5050
 
 RUN mkdir /app && chown -R node:node /app
