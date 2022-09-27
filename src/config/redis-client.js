@@ -19,10 +19,10 @@ if (REDIS_HOST) {
 
 export const client = createClient({ url, name: SERVICE });
 
-export const addToStream = async (event, declarationId, payload) => {
+export const addToStream = async (event, aggregateId, payload) => {
   const streamData = {
     streamKeyName: STREAM,
-    aggregateId: declarationId,
+    aggregateId,
     payload,
     event,
     serviceName: SERVICE,
