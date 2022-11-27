@@ -1,5 +1,5 @@
-FROM node:16-slim
-ENV NODE_ENV=prodcution
+FROM node:lts-bullseye-slim
+ENV NODE_ENV=prodoction
 ENV REDIS_URL=redis://172.17.0.1:6379
 RUN apt-get install tzdata
 ENV TZ America/Curacao
