@@ -3,11 +3,15 @@ import "dotenv/config";
 import { newEventStreamService as EventStream } from "@nelreina/redis-stream-consumer";
 
 import { client } from "./config/redis-client.js";
+import { pbAdmin } from "./config/pocketbase.js";
 import logger from "./config/logger.js";
 import { handler } from "./event-handler.js";
 import { SERVICE } from "./config/constants.js";
 
 const STREAM = process.env["STREAM"];
+const POCKETBASE_ADMIN = process.env["POCKETBASE_ADMIN"];
+const POCKETBASE_PASSWORD = process.env["POCKETBASE_PASSWORD"];
+
 
 const shutdown = async () => {
   try {
@@ -23,7 +27,23 @@ const shutdown = async () => {
 try {
   if (!client.isOpen) await client.connect();
   if (client.isOpen) {
-    logger.info("Successfully connected to redis");
+    logger.info("✅ Successfully connected to redis");
+
+    try {
+      await pbAdmin.admins.authWithPassword(
+        POCKETBASE_ADMIN,
+        POCKETBASE_PASSWORD
+      );
+      logger.info(
+        "✅ PocketBase admin authenticated for admin user: " + POCKETBASE_ADMIN
+      );
+      schedule.scheduleJob(RESET_SCHEDULE, resetCalculations);
+    } catch (error) {
+      logger.error(
+        "❗️ PocketBase admin authentication failed:  " + error.message
+      );
+    }
+
 
     const msg = await EventStream(client, STREAM, SERVICE, false, handler);
     logger.info(msg);
