@@ -15,13 +15,13 @@
   },
   "dependencies": {
     "@nelreina/redis-stream-consumer": "^2.1.4",
-    "@nelreina/rest-client": "^2.12.0",
+    "@nelreina/rest-client": "^2.15.0",
     "dotenv": "^16.0.0",
     "eventsource": "^2.0.2",
     "lodash": "^4.17.21",
     "pino": "^7.11.0",
     "pino-pretty": "^7.6.1",
-    "pocketbase": "^0.8.1",
+    "pocketbase": "0.8.0",
     "redis": "^4.0.6"
   }
 }
