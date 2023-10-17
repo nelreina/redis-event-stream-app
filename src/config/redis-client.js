@@ -18,7 +18,7 @@ if (REDIS_HOST) {
 }
 
 export const client = createClient({ url, name: SERVICE });
-
+export const pubsub = client.duplicate();
 export const addToStream = async (event, aggregateId, payload) => {
   const streamData = {
     streamKeyName: STREAM,
@@ -28,4 +28,9 @@ export const addToStream = async (event, aggregateId, payload) => {
     serviceName: SERVICE,
   };
   await addToEventLog(client, streamData);
+};
+
+export const subscribe2RedisChannel = async (channel, callback) => {
+  if (!pubsub.isOpen) await pubsub.connect();
+  pubsub.subscribe(channel, callback);
 };
