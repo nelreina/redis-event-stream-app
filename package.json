@@ -19,6 +19,7 @@
     "dotenv": "^16.0.0",
     "eventsource": "^2.0.2",
     "lodash": "^4.17.21",
+    "lodash-es": "^4.17.21",
     "minimist": "^1.2.7",
     "pino": "^7.11.0",
     "pino-pretty": "^7.6.1",

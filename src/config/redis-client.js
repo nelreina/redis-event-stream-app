@@ -1,6 +1,7 @@
 import { createClient } from "redis";
 import { SERVICE } from "./constants.js";
 import { addToEventLog } from "@nelreina/redis-stream-consumer";
+import { isObject } from "lodash-es";
 
 let url;
 const REDIS_HOST = process.env["REDIS_HOST"];
@@ -32,5 +33,21 @@ export const addToStream = async (event, aggregateId, payload) => {
 
 export const subscribe2RedisChannel = async (channel, callback) => {
   if (!pubsub.isOpen) await pubsub.connect();
-  pubsub.subscribe(channel, callback);
+  await pubsub.subscribe(channel, (payload) => {
+    try {
+      callback(JSON.parse(payload));
+      // console.log("parsed")
+    } catch (error) {
+      callback(payload);
+    }
+  });
+  logger.info(`✅ Subscribed to redis channel: ${channel}`);
+};
+
+export const publish2RedisChannel = async (channel, payload) => {
+  if (!client.isOpen) await client.connect();
+  return await client.publish(
+    channel,
+    isObject(payload) ? JSON.stringify(payload) : payload
+  );
 };
