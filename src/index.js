@@ -10,7 +10,7 @@ import { SERVICE } from "./config/constants.js";
 
 const STREAM = process.env["STREAM"];
 const POCKETBASE_ADMIN = process.env["POCKETBASE_ADMIN"];
-const POCKETBASE_PASSWORD = process.env["POCKETBASE_PASSWORD"];
+const POCKETBASE_ADMIN_PASSWORD = process.env["POCKETBASE_ADMIN_PASSWORD"];
 
 const shutdown = async () => {
   try {
@@ -27,20 +27,23 @@ try {
   if (!client.isOpen) await client.connect();
   if (client.isOpen) {
     logger.info("✅ Successfully connected to redis");
-    if (POCKETBASE_ADMIN === undefined || POCKETBASE_PASSWORD === undefined) {
+    if (
+      POCKETBASE_ADMIN === undefined ||
+      POCKETBASE_ADMIN_PASSWORD === undefined
+    ) {
       // skip authentication
       logger.warn("Pocketbase admin credentials not provided.");
     } else {
       try {
         await pbAdmin.admins.authWithPassword(
           POCKETBASE_ADMIN,
-          POCKETBASE_PASSWORD
+          POCKETBASE_ADMIN_PASSWORD
         );
         logger.info(
           "✅ PocketBase admin authenticated for admin user: " +
             POCKETBASE_ADMIN
         );
-        schedule.scheduleJob(RESET_SCHEDULE, resetCalculations);
+        // schedule.scheduleJob(RESET_SCHEDULE, resetCalculations);
       } catch (error) {
         logger.error(
           "❗️ PocketBase admin authentication failed:  " + error.message
